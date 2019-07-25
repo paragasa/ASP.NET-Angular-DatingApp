@@ -9,11 +9,11 @@ DATELY
 
 /* Upload your profile pics */
 
-![](readme_resource/screencapture-localhost-4200-member-edit-2019-07-24-21_19_04.png)
+![](readme_resource/screencapture-localhost-4200-member-edit-2019-07-24-21_55_13.png)
 
 /* Edit your profile */
 
-![](readme_resource/screencapture-localhost-4200-member-edit-2019-07-24-21_21_53.png)
+![](readme_resource/screencapture-localhost-4200-member-edit-2019-07-24-21_52_08.png)
 
 /* View other profiles and message them and chat */
 
