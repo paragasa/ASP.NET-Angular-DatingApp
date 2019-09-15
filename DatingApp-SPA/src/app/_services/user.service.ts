@@ -12,7 +12,8 @@ import { Message } from '../_models/message';
   providedIn: 'root'
 })
 export class UserService {
-  baseUrl = environment.apiUrl;  // set up on our env url
+  // baseUrl = environment.apiUrl;  // set up on our env url
+  baseUrl = '/api/';
 constructor(private http: HttpClient) { }
 
 

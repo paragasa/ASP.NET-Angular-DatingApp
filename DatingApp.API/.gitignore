@@ -5,3 +5,6 @@ obj
 *.dbsqbpro
 appsettings.json
 wwwroot
+appsettings 
+appsettings.json
+appsettings.Development.json

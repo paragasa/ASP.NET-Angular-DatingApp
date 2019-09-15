@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
 
-baseUrl = 'http://localhost:5000/api/auth/';
+baseUrl = '/api/auth/';
 jwtHelper = new JwtHelperService();
 decodedToken: any;
 currentUser: User;
