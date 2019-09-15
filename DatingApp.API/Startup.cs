@@ -36,27 +36,27 @@ namespace DatingApp.Api
         public IConfiguration Configuration { get; }
 
 
-         //ConfigureDevelopmentServices
+        // //  ConfigureDevelopmentServices
         // public void ConfigureDevelopmentServices(IServiceCollection services)
         // {
         //     services.AddDbContext<DataContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             
         //    ConfigureServices(services);
         // }
-        //ConfigureDevelopmentServices
-        // public void ConfigureProductionServices(IServiceCollection services)
-        // {
-        //     services.AddDbContext<DataContext>(options => options
-        //         .UseMySql(Configuration.GetConnectionString("DefaultConnection"))
-        //         .ConfigureWarnings(warning => warning.Ignore(CoreEventId.IncludeIgnoredWarning)));
+        // ConfigureDevelopmentServices
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            services.AddDbContext<DataContext>(options => options
+                .UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+               // .ConfigureWarnings(warning => warning.Ignore(CoreEventId.IncludeIgnoredWarning)));
             
-        //    ConfigureServices(services);
-        // }
+           ConfigureServices(services);
+        }
         //AZURE PRODUCTION
          public void ConfigureProductionServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(options => options
-                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DataContext>(options => 
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
                 //.ConfigureWarnings(warning => warning.Ignore(CoreEventId.IncludeIgnoredWarning)));
             
            ConfigureServices(services);
@@ -64,14 +64,14 @@ namespace DatingApp.Api
         
         public void ConfigureServices(IServiceCollection services)
         {
-           
+         
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(opt => {
                     opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
-                
+         
+            services.BuildServiceProvider().GetService<DataContext>().Database.Migrate();
             services.AddCors(); //cor serv web api to ang
-           
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings")); //get our cloud settings
             services.AddAutoMapper();
             services.AddTransient<Seed>(); //trans user seeding
@@ -90,7 +90,7 @@ namespace DatingApp.Api
            
         }
        
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline. , Seed seeder
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seed seeder)
         {
             if (env.IsDevelopment())
@@ -110,14 +110,12 @@ namespace DatingApp.Api
                         } 
                     });
                 });
-              app.UseHsts();
+             // app.UseHsts();
             }
-
-           
-        //    app.UseDeveloperExceptionPage();
-            app.UseHttpsRedirection();
-           // seeder.SeedUsers();
-
+        
+            // app.UseDeveloperExceptionPage();
+            //app.UseHttpsRedirection();
+            seeder.SeedUsers();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
         
             app.UseAuthentication();
